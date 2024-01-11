@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    paths-ignore: ['**.md', '**.adoc']
+  pull_request:
+    paths-ignore: ['**.md', '**.adoc']
+
+jobs:
+  test:
+    runs-on: ${{matrix.os}}
+    continue-on-error: ${{matrix.emacs_version == 'snapshot'}}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        emacs_version: ['25.1', '25.2', '25.3',
+                        '26.1', '26.2', '26.3',
+                        '27.1', '27.2',
+                        '28.1', '28.2',
+                        '29.1',
+                        'snapshot']
+        include:
+          - os: macos-latest
+            emacs_version: '29.1'
+          - os: windows-latest
+            emacs_version: '29.1'
+
+    steps:
+    - name: Set up Emacs
+      uses: jcs090218/setup-emacs@master
+      with:
+        version: ${{matrix.emacs_version}}
+
+    - name: Install Eldev
+      uses: emacs-eldev/setup-eldev@v1
+
+    - name: Check out the source code
+      uses: actions/checkout@v4
+      with:
+        # To make automated copyright notice check below work.  Can this be optimized?
+        fetch-depth: 0
+
+    - name: Test the project
+      run: |
+        eldev -p -dtT -C test --expect 10
+        eldev -dtT -C compile --set all --warnings-as-errors
+
+    - name: Ensure that copyright notices are up-to-date
+      run: |
+        eldev -p -dvQTC doctor up-to-date-copyright --all-tests
