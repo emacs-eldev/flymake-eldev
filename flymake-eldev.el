@@ -7,7 +7,7 @@
 ;; Version:    0.9snapshot
 ;; Keywords:   tools, convenience
 ;; Homepage:   https://github.com/emacs-eldev/flymake-eldev
-;; Package-Requires: ((dash "2.17") (emacs "25.1"))
+;; Package-Requires: ((dash "2.17") (emacs "28.1"))
 
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
