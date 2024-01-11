@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (require 'project-a)
 
 (this-function-has-never-been-declared)

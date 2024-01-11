@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (require 'flymake-eldev)
 (require 'dash)
 (require 'ert)
@@ -138,7 +140,7 @@
 ;; Test that faulty project initialization code is handled fine.
 (ert-deftest flymake-eldev-faulty-eldev-local-1 ()
   (flymake-eldev--test-with-temp-file "project-a/Eldev-local"
-      (insert "this-variable-certainly-doesnt-exist")
+      (insert ";;  -*- lexical-binding: t -*-\nthis-variable-certainly-doesnt-exist\n")
     (flymake-eldev--test "project-a/project-a.el"
       (flymake-eldev--test-recheck)
       (flymake-eldev--test-expect-errors '(:matches "cannot be initialized")))))
@@ -146,7 +148,7 @@
 ;; When checking the faulty `Eldev-local', we must not use it for initialization.
 (ert-deftest flymake-eldev-faulty-eldev-local-2 ()
   (flymake-eldev--test-with-temp-file "project-a/Eldev-local"
-      (insert "this-variable-certainly-doesnt-exist")
+      (insert ";;  -*- lexical-binding: t -*-\nthis-variable-certainly-doesnt-exist\n")
     (flymake-eldev--test "project-a/Eldev-local"
       (flymake-eldev--test-recheck)
       (flymake-eldev--test-expect-errors '(:matches "this-variable-certainly-doesnt-exist")))))
@@ -154,7 +156,7 @@
 ;; Test that `flymake-eldev' really works on Eldev files if those are byte-compilable.
 (ert-deftest flymake-eldev-suspicious-eldev-local-1 ()
   (flymake-eldev--test-with-temp-file "project-a/Eldev-local"
-      (insert "(defun just-for-testing () (function-with-this-name-certainly-doesnt-exist))")
+      (insert ";;  -*- lexical-binding: t -*-\n(defun just-for-testing () (function-with-this-name-certainly-doesnt-exist))\n")
     (flymake-eldev--test "project-a/Eldev-local"
       (flymake-eldev--test-recheck)
       (flymake-eldev--test-expect-errors '(:matches "function-with-this-name-certainly-doesnt-exist")))))

@@ -77,9 +77,10 @@ If FROM is nil, search from `default-directory'."
 
 
 (defun flymake-eldev--byte-compile (original report-fn &rest args)
-  (let* ((project-root      (flymake-eldev-find-root))
-         (default-directory (or project-root default-directory))
-         (real-filename     (buffer-file-name)))
+  (let* ((project-root        (flymake-eldev-find-root))
+         (default-directory   (or project-root default-directory))
+         (process-environment process-environment)
+         (real-filename       (buffer-file-name)))
     (flymake-eldev--advised
         (#'make-process :around (when project-root
                                   (lambda (make-process &rest args)
@@ -110,6 +111,8 @@ If FROM is nil, search from `default-directory'."
                                                                             (funcall sentinel eldev-process event))))))
                                         (warn "flymake-eldev: cannot build compilation command basing on %S" command)))
                                     (apply make-process args))))
+      (when project-root
+        (push (format "ELDEV_EMACS=%s" invocation-name) process-environment))
       (apply original report-fn args))))
 
 (defun flymake-eldev--extract-stderr (buffer)

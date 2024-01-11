@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 ;; Using loading root to test that `flymake-eldev' handles this too.
 (require 'test-util)
 
