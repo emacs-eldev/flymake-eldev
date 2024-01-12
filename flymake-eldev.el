@@ -125,8 +125,11 @@ If FROM is nil, search from `default-directory'."
           message))
     (format-message "Eldev %s is required; please run `eldev upgrade-self'" flymake-eldev--required-eldev-version)))
 
-(defun flymake-eldev--checkdoc (original &rest args)
-  (apply original args))
+(defun flymake-eldev--checkdoc (original report-fn &rest args)
+  ;; Disable `checkdoc' on Eldev files, it makes zero sense there.
+  (if (member (file-name-nondirectory (buffer-file-name)) '("Eldev" "Eldev-local"))
+      (funcall report-fn nil)
+    (apply original report-fn args)))
 
 (defun flymake-eldev--build-command-line (real-filename function temp-file)
   `("eldev"

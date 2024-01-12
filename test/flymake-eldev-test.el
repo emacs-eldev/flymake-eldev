@@ -31,6 +31,7 @@
          (progn ,@body)
        (ignore-errors (delete-file file)))))
 
+;; FIXME: Force checkdoc test too.  I have no idea how to do it, `flymake-start' is apparently not enough.
 (defun flymake-eldev--test-recheck ()
   (flymake-start)
   ;; As always, we have to dig through internals.
