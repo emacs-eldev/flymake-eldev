@@ -4,7 +4,7 @@
 
 ;; Author:     Paul Pogonyshev <pogonyshev@gmail.com>
 ;; Maintainer: Paul Pogonyshev <pogonyshev@gmail.com>
-;; Version:    0.9snapshot
+;; Version:    0.9
 ;; Keywords:   tools, convenience
 ;; Homepage:   https://github.com/emacs-eldev/flymake-eldev
 ;; Package-Requires: ((dash "2.17") (emacs "28.1"))
