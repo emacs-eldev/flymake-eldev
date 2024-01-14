@@ -39,7 +39,7 @@
   (let ((start-time (float-time)))
     (while (not (flymake--state-reported-p (gethash 'elisp-flymake-byte-compile flymake--state)))
       ;; Be generous, what if Eldev needs to install dependencies?
-      (when (> (- (float-time) start-time) 3.0) ; DONOTCOMMIT: was 30.0
+      (when (> (- (float-time) start-time) 30.0)
         (ert-fail "timed out"))
       (accept-process-output nil 0.02))
     (should (flymake--state-reported-p (gethash 'elisp-flymake-byte-compile flymake--state)))))
