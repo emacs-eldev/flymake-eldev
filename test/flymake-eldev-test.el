@@ -11,6 +11,8 @@
 (defmacro flymake-eldev--test (file &rest body)
   (declare (indent 1) (debug (sexp body)))
   `(let ((file                         (expand-file-name ,file flymake-eldev--test-dir))
+         ;; Make sure the tests work even if the package got disabled interactively.
+         (flymake-eldev-active         t)
          ;; Not needed for our tests, only results in an ugly warning (at least on Emacs
          ;; 29).  Force-disable it.
          (flymake-diagnostic-functions (delq 'flymake-proc-legacy-flymake flymake-diagnostic-functions)))
@@ -117,8 +119,8 @@
     (flymake-eldev--test-expect-no-errors)))
 
 (ert-deftest flymake-eldev-deactivating-1 ()
-  (let ((flymake-eldev-active nil))
-    (flymake-eldev--test "project-a/project-a.el"
+  (flymake-eldev--test "project-a/project-a.el"
+    (let ((flymake-eldev-active nil))
       (flymake-eldev--test-recheck)
       (flymake-eldev--test-expect-errors '(:matches "dependency-a")))))
 

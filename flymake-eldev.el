@@ -207,15 +207,30 @@ If FROM is nil, search from `default-directory'."
 
 
 ;;;###autoload
-(defun flymake-eldev--initialize ()
+(defun flymake-eldev-initialize ()
+  "Initialize flymake-eldev.
+Normally you don't need to call this manually: the package is
+automatically activated once installed."
   (advice-add #'elisp-flymake-byte-compile :around 'flymake-eldev--byte-compile)
   (advice-add #'elisp-flymake-checkdoc     :around 'flymake-eldev--checkdoc)
   ;; I don't think we need a separate package just for this, so let's do it here.
   (add-to-list 'auto-mode-alist `(,(rx "/" (or "Eldev" "Eldev-local") eos) . emacs-lisp-mode) t))
 
+(defun flymake-eldev-finalize ()
+  "Remove flymake-eldev's advices.
+You can also just set variable `flymake-eldev-active' to nil
+(also e.g. let-bind it in a scope) if you only need to disable
+the package temporarily."
+  (advice-remove #'elisp-flymake-byte-compile 'flymake-eldev--byte-compile)
+  (advice-remove #'elisp-flymake-checkdoc     'flymake-eldev--checkdoc))
+
+;; Used by `unload-feature'.
+(defun flymake-eldev-unload-function ()
+  (flymake-eldev-finalize))
+
 
 ;;;###autoload
-(eval-after-load 'flymake '(flymake-eldev--initialize))
+(eval-after-load 'flymake '(flymake-eldev-initialize))
 
 
 (provide 'flymake-eldev)
