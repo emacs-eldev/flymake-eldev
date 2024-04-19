@@ -1,4 +1,11 @@
-:icons: font
+ifndef::env-github[:icons: font]
+ifdef::env-github[]
+:warning-caption: :warning:
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+endif::[]
 :source-language: lisp
 :uri-flymake: https://www.gnu.org/software/emacs/manual/html_node/emacs/Flymake.html
 :uri-flycheck: https://www.flycheck.org/
