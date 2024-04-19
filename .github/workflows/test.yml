@@ -20,8 +20,12 @@ jobs:
         include:
           - os: macos-latest
             emacs_version: '29.1'
-          - os: windows-latest
-            emacs_version: '29.1'
+          # Disabled for now.  There are some misterious bugs with zero actual changes, so
+          # maybe something is wrong with GitHub setup.  Or maybe not.  Anyhow, I don't
+          # have a way to test on Windows myself, so let's wait (forever) if someone
+          # reports anything and is willing to test on his own.
+          # - os: windows-latest
+          #   emacs_version: '29.1'
 
     steps:
     - name: Set up Emacs
