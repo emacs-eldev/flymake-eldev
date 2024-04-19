@@ -1,3 +1,4 @@
+:icons: font
 :source-language: lisp
 :uri-flymake: https://www.gnu.org/software/emacs/manual/html_node/emacs/Flymake.html
 :uri-flycheck: https://www.flycheck.org/
