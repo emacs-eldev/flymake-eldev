@@ -1,5 +1,7 @@
 :source-language: lisp
 :uri-flymake: https://www.gnu.org/software/emacs/manual/html_node/emacs/Flymake.html
+:uri-flycheck: https://www.flycheck.org/
+:uri-flycheck-eldev: https://github.com/flycheck/flycheck-eldev
 :uri-eldev: https://github.com/emacs-eldev/eldev
 :uri-eldev-installation: https://github.com/emacs-eldev/eldev#installation
 :uri-melpa-stable: https://stable.melpa.org/#/flymake-eldev
@@ -17,6 +19,9 @@ Make {uri-flymake}[Flymake] use proper dependencies in
 For a project to be detected, it must contain file `Eldev` or
 `Eldev-local` in its root directory, even if Eldev doesn’t strictly
 require that.
+
+TIP: If you are using {uri-flycheck}[Flycheck] and not Flymake, check
+out a similar project, {uri-flycheck-eldev}[flycheck-eldev]
 
 == Features
 
